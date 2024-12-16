@@ -20,7 +20,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Checkout />} />
           <Route path="/ringsO" element={<MainPageO />} />
-          <Route path="/rings" element={<MainPage />} />
+          <Route
+            path="/rings"
+            element={<MainPage baseUrl={"https://real.heroksa.net"} />}
+          />
           <Route path="/products" element={<Products />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/findstore" element={<FindStore />} />

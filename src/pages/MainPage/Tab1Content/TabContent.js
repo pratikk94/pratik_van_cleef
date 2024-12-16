@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Grid, Typography, FormControlLabel, Radio } from "@mui/material";
 
 const TabContent = ({
   data,
-  products,
+  listOfproducts,
   baseUrl,
   filterImages,
   setSelectedProduct,
 }) => {
+  const [products] = useState(listOfproducts);
   return (
     <Box className="tab-content" sx={{ padding: 2, margin: "0 5vw" }}>
       {/* Gemstone Selection */}
@@ -29,9 +30,15 @@ const TabContent = ({
                 alt={item.name}
                 style={{
                   borderRadius: "50%",
-                  maxWidth: "100px",
+                  maxWidth: "80px",
+                  height: "80px",
+                  objectFit: "cover",
+                  border: "2px solid #ccc",
                 }}
               />
+              <Typography variant="body2" sx={{ marginTop: 1 }}>
+                {item.name}
+              </Typography>
             </Box>
           </Grid>
         ))}
@@ -44,18 +51,36 @@ const TabContent = ({
       <Grid container spacing={2}>
         {data?.colors?.map((item, index) => (
           <Grid item xs={6} sm={3} key={index}>
-            <FormControlLabel
-              value={item.name}
-              control={<Radio onClick={() => filterImages("color", item.id)} />}
-              label={
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  style={{ maxWidth: "100px" }}
-                />
-              }
-              sx={{ textAlign: "center" }}
-            />
+            <Box
+              sx={{
+                textAlign: "center",
+                cursor: "pointer",
+              }}
+            >
+              <FormControlLabel
+                value={item.name}
+                control={
+                  <Radio onClick={() => filterImages("color", item.id)} />
+                }
+                label={
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    style={{
+                      maxWidth: "80px",
+                      height: "80px",
+                      objectFit: "cover",
+                      borderRadius: "50%",
+                      border: "2px solid #ccc",
+                    }}
+                  />
+                }
+                sx={{ textAlign: "center" }}
+              />
+              <Typography variant="body2" sx={{ marginTop: 1 }}>
+                {item.name}
+              </Typography>
+            </Box>
           </Grid>
         ))}
       </Grid>
@@ -66,7 +91,18 @@ const TabContent = ({
       </Typography>
       <Grid container spacing={2}>
         {products?.map((product, index) => {
-          if (product?.sub_category?.id === 1) {
+          if (product?.id === 5) {
+            console.log(product);
+            const mainImage =
+              product.image && product.image.length > 0
+                ? product.image[0].image
+                : "https://via.placeholder.com/150"; // Fallback if no image
+
+            const discountedPrice = product.discount
+              ? product.price - product.discount
+              : product.price;
+            console.log("in here");
+            console.log(mainImage);
             return (
               <Grid item xs={6} sm={4} md={3} key={index}>
                 <Box
@@ -74,20 +110,43 @@ const TabContent = ({
                   sx={{
                     textAlign: "center",
                     cursor: "pointer",
+                    border: "1px solid #ddd",
+                    borderRadius: "8px",
+                    padding: 2,
+                    transition: "transform 0.2s",
+                    "&:hover": {
+                      transform: "scale(1.05)",
+                    },
                   }}
                 >
                   <img
-                    src={`${baseUrl}/${product?.image[0]?.image}`}
+                    src={mainImage}
                     alt={product.title}
                     style={{
                       width: "100%",
-                      borderRadius: "8px",
+                      height: "150px",
+                      objectFit: "cover",
+                      borderRadius: "4px",
                     }}
                   />
-                  <Typography variant="subtitle1">{product.title}</Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    {product.price}
+                  <Typography variant="subtitle1" sx={{ marginTop: 1 }}>
+                    {product.title}
                   </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      textDecoration: product.discount
+                        ? "line-through"
+                        : "none",
+                    }}
+                  >
+                    ${product.price}
+                  </Typography>
+                  {product.discount && (
+                    <Typography variant="body2" color="primary">
+                      Now: ${discountedPrice}
+                    </Typography>
+                  )}
                 </Box>
               </Grid>
             );

@@ -3,14 +3,14 @@ import {
   Box,
   Grid,
   Typography,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
   Button,
   Card,
   CardContent,
   CardMedia,
   TextField,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
 } from "@mui/material";
 
 const Tab3Content = ({ items, data, baseUrl, showContent }) => {
@@ -27,17 +27,24 @@ const Tab3Content = ({ items, data, baseUrl, showContent }) => {
 
   return (
     <Box sx={{ padding: { xs: 2, sm: 4 }, backgroundColor: "#f9f9f9" }}>
-      <Grid container spacing={4}>
-        {/* Left Section - Thumbnail Gallery */}
-        <Grid item xs={12} md={7}>
-          <Card sx={{ borderRadius: 2, boxShadow: 3 }}>
+      <Grid container spacing={4} alignItems="stretch">
+        {/* Left Section - Reduced Width */}
+        <Grid item xs={12} sm={5}>
+          <Card sx={{ borderRadius: 2, boxShadow: 3, height: "100%" }}>
             <CardContent>
-              <Typography variant="h6" gutterBottom align="center">
+              <Typography variant="h6" align="center" gutterBottom>
                 Product Showcase
               </Typography>
 
               {/* Thumbnails */}
-              <Box sx={{ display: "flex", gap: 2, overflowX: "auto" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 2,
+                  overflowX: "auto",
+                  justifyContent: "center",
+                }}
+              >
                 {thumbnails.map((image) => (
                   <CardMedia
                     key={image.id}
@@ -45,8 +52,8 @@ const Tab3Content = ({ items, data, baseUrl, showContent }) => {
                     image={image.src}
                     alt={image.alt}
                     sx={{
-                      width: "80px",
-                      height: "80px",
+                      width: "60px",
+                      height: "60px",
                       borderRadius: "8px",
                       cursor: "pointer",
                       transition: "transform 0.3s",
@@ -69,21 +76,36 @@ const Tab3Content = ({ items, data, baseUrl, showContent }) => {
                   marginTop: 2,
                   borderRadius: 2,
                   boxShadow: 2,
+                  objectFit: "contain",
                 }}
               />
             </CardContent>
           </Card>
         </Grid>
 
-        {/* Right Section - Customization Options */}
-        <Grid item xs={12} md={5}>
-          <Card sx={{ borderRadius: 2, boxShadow: 3, padding: 3 }}>
-            <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold" }}>
-              Bespoke Customizations
-            </Typography>
+        {/* Right Section - Increased Height */}
+        <Grid item xs={12} sm={7}>
+          <Card
+            sx={{
+              borderRadius: 2,
+              boxShadow: 3,
+              padding: 3,
+              height: "100%", // Makes the card fill available height
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <Box>
+              <Typography
+                variant="h5"
+                gutterBottom
+                sx={{ fontWeight: "bold", marginBottom: 2 }}
+              >
+                Bespoke Customizations
+              </Typography>
 
-            {/* Bespoke Customizations */}
-            <Box marginBottom={3}>
+              {/* Bespoke Customizations */}
               {items?.bespokeCustomisationsUserSelected?.map((item, index) => {
                 const customization = data?.bespokeWithTypes?.find(
                   (c) => c?.id === item
@@ -115,25 +137,31 @@ const Tab3Content = ({ items, data, baseUrl, showContent }) => {
                   </Box>
                 );
               })}
-            </Box>
 
-            {/* Complimentary Engraving */}
-            <Box marginBottom={3}>
-              <Typography variant="h6">Complimentary Engraving</Typography>
-              <Typography variant="body2" color="textSecondary">
-                Personalize your ring with engraving (max 20 characters).
-              </Typography>
-              <TextField
-                variant="outlined"
-                fullWidth
-                placeholder="A name, date, initials, or word"
-                inputProps={{ maxLength: 20 }}
-                sx={{ marginTop: 2 }}
-              />
+              {/* Complimentary Engraving */}
+              <Box marginBottom={3}>
+                <Typography variant="h6">Complimentary Engraving</Typography>
+                <Typography variant="body2" color="textSecondary">
+                  Personalize your ring with engraving (max 20 characters).
+                </Typography>
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  placeholder="A name, date, initials, or word"
+                  inputProps={{ maxLength: 20 }}
+                  sx={{ marginTop: 2 }}
+                />
+              </Box>
             </Box>
 
             {/* Navigation Buttons */}
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "auto",
+              }}
+            >
               <Button
                 variant="outlined"
                 color="primary"

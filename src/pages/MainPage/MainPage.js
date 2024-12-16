@@ -1,27 +1,116 @@
-import React, { useState } from "react";
-import { Grid, Box, Typography } from "@mui/material";
+import React, { useState, useEffect, useMemo } from "react";
+import { Grid, Box, Typography, CircularProgress } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import ArrowTabs from "../MainPage/ArrowTabs/ArrowTabs";
 import Tab2Content from "./Tab2Content/Tab2Content";
 import TabContent from "../MainPage/Tab1Content/TabContent";
 import Tab3Content from "./Tab3Content/Tab3Content";
+import { CustomizationMiddleware } from "../../store/customize/customizationMiddleware";
+import { DeleteProductsMiddleware } from "../../store/products/deleteProductsMiddleware";
 
-const MainPage = ({ data, products, baseUrl }) => {
-  const [activeTab, setActiveTab] = useState(0); // Tracks the selected tab
+const MainPage = ({ baseUrl }) => {
+  const dispatch = useDispatch();
 
-  const filterImages = (type, id) => {
-    console.log(`Filtering images by ${type} with id: ${id}`);
-  };
-
+  // Local States
+  const [activeTab, setActiveTab] = useState(1); // Tracks the selected tab
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
 
+  // Redux Selectors
+  const {
+    gemShapes,
+    gemStoneColors,
+    birthStones,
+    gemStones,
+    prongStyles,
+    ringSizes,
+    bandWidths,
+    settingHeights,
+    bespokeCustomizations,
+    bespokeWithTypes,
+    accentStoneTypes,
+  } = useSelector((state) => state.customization);
+
+  const { products: allProducts } = useSelector((state) => state.products);
+
+  // Fetch Redux Data
+  useEffect(() => {
+    const formData = { skip: 0, take: 10 };
+
+    // Dispatch actions to fetch data
+    dispatch(CustomizationMiddleware.fetchAllCustomizationData());
+    dispatch(DeleteProductsMiddleware.GetAllProducts(formData));
+  }, [dispatch]);
+
+  // Sync Products from Redux and set loading state
+  useEffect(() => {
+    if (allProducts && allProducts.length > 0) {
+      setProducts(allProducts);
+      setLoading(false); // Stop loading when products are available
+    }
+  }, [allProducts]);
+
+  // Memoized Customization Data
+  const data = useMemo(
+    () => ({
+      shapes: gemShapes,
+      colors: gemStoneColors,
+      widths: bandWidths,
+      settingsHeight: settingHeights,
+      ringSize: ringSizes,
+      prongStyle: prongStyles,
+      birthstones: birthStones,
+      gemstones: gemStones,
+      accentStoneTypes: accentStoneTypes,
+      bespokeCustomizations: bespokeCustomizations,
+      bespokeWithTypes: bespokeWithTypes,
+    }),
+    [
+      gemShapes,
+      gemStoneColors,
+      bandWidths,
+      settingHeights,
+      ringSizes,
+      prongStyles,
+      birthStones,
+      gemStones,
+      accentStoneTypes,
+      bespokeCustomizations,
+      bespokeWithTypes,
+    ]
+  );
+
+  // Tab Handlers
   const showContent = (tab) => setActiveTab(tab);
 
-  const changeMainImage = (image) => {
-    console.log(`Main Image Changed: ${image}`);
+  const filterImages = (type, value) => {
+    if (!products || products.length === 0) return;
+
+    const filteredProducts =
+      type === "stoneType"
+        ? products.filter(
+            (product) => product?.product_customizations?.gem_shape_id === value
+          )
+        : products.filter(
+            (product) =>
+              product?.product_customizations?.default_metal_id === value
+          );
+
+    setProducts(filteredProducts);
   };
 
+  const changeMainImage = (image) => {
+    const mainImage = document.getElementById("mainProductImage");
+    if (mainImage) {
+      mainImage.src = image;
+    }
+  };
+
+  // Main Render
   return (
     <div style={{ fontFamily: "Judson, serif" }}>
+      {/* Background Section */}
       <Box
         sx={{
           position: "relative",
@@ -33,7 +122,6 @@ const MainPage = ({ data, products, baseUrl }) => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        {/* Foreground Image */}
         <Box
           sx={{
             position: "absolute",
@@ -46,8 +134,6 @@ const MainPage = ({ data, products, baseUrl }) => {
             backgroundPosition: "left",
           }}
         />
-
-        {/* Centered Content */}
         <Grid
           container
           sx={{
@@ -93,38 +179,54 @@ const MainPage = ({ data, products, baseUrl }) => {
         </Grid>
       </Box>
 
-      {/* Arrow Tabs */}
-      <ArrowTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+      {/* Loading State */}
+      {loading ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "50vh",
+          }}
+        >
+          <CircularProgress size={60} />
+        </Box>
+      ) : (
+        <>
+          {/* Tabs Section */}
+          <ArrowTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      {/* Render TabContent only if Tab 1 is selected */}
-      {activeTab === 1 && (
-        <TabContent
-          data={data}
-          products={products}
-          baseUrl={baseUrl}
-          filterImages={filterImages}
-          setSelectedProduct={setSelectedProduct}
-        />
-      )}
-      {activeTab === 2 && (
-        <Tab2Content
-          selectedProduct={selectedProduct}
-          data={data}
-          items={products}
-          baseUrl={baseUrl}
-          filterImages={filterImages}
-          showContent={showContent}
-          changeMainImage={changeMainImage}
-        />
-      )}
-      {activeTab === 3 && (
-        <Tab3Content
-          items={products}
-          data={data}
-          baseUrl={baseUrl}
-          showContent={showContent}
-          changeMainImage={changeMainImage}
-        />
+          {/* Conditional Tab Rendering */}
+          {activeTab === 1 && (
+            <TabContent
+              data={data}
+              listOfproducts={products}
+              baseUrl={baseUrl}
+              filterImages={filterImages}
+              setSelectedProduct={setSelectedProduct}
+            />
+          )}
+          {activeTab === 2 && (
+            <Tab2Content
+              selectedProduct={selectedProduct}
+              data={data}
+              items={products}
+              baseUrl={baseUrl}
+              filterImages={filterImages}
+              showContent={showContent}
+              changeMainImage={changeMainImage}
+            />
+          )}
+          {activeTab === 3 && (
+            <Tab3Content
+              items={products}
+              data={data}
+              baseUrl={baseUrl}
+              showContent={showContent}
+              changeMainImage={changeMainImage}
+            />
+          )}
+        </>
       )}
     </div>
   );

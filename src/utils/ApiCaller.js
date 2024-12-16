@@ -4,20 +4,13 @@ let base_Url = "https://real.heroksa.net";
 
 export default class ApiCaller {
   static BearerHeaders = (token) => {
-    return token
-      ? { Authorization: `Bearer ${token}` }
-      : {};
+    return token ? { Authorization: `Bearer ${token}` } : {};
   };
 
-  static async Get(
-    url = "",
-    token,
-    customUrl = ""
-
-  ) {
+  static async Get(url = "", token, customUrl = "") {
     base_Url = "https://real.heroksa.net";
     try {
-      const response = await Axios.get( `${base_Url}${url}`, {
+      const response = await Axios.get(`${base_Url}${url}`, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           ...ApiCaller.BearerHeaders(token),
@@ -29,22 +22,16 @@ export default class ApiCaller {
     }
   }
 
-  static async Post(
-    endPoint = "",
-    body = {},
-    token,
-    customUrl = ""
-  ) {
+  static async Post(endPoint = "", body = {}, token, customUrl = "") {
     try {
       //      base_Url = "http://localhost:5000";
 
-      base_Url = "";
+      base_Url = "https://real.heroksa.net";
 
-      
-      const response = await Axios.post( `${base_Url}${endPoint}`, body, {
+      const response = await Axios.post(`${base_Url}${endPoint}`, body, {
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json",
+          Accept: "application/json",
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
           "Access-Control-Allow-Headers": "Content-Type, Authorization",
@@ -52,19 +39,13 @@ export default class ApiCaller {
         },
       });
 
-    
       return response;
     } catch (err) {
-
       return err.response;
     }
   }
 
-  static async Put(
-    url = "",
-    body = {},
-    token
-  ) {
+  static async Put(url = "", body = {}, token) {
     try {
       const response = await Axios.put(`${base_Url}${url}`, body, {
         headers: {
@@ -78,12 +59,9 @@ export default class ApiCaller {
     }
   }
 
-  static async Delete(
-    url = "",
-    body = {},
-    token
-  ) {
+  static async Delete(url = "", body = {}, token) {
     try {
+      base_Url = "https://real.heroksa.net";
       const response = await Axios.delete(`${base_Url}${url}`, {
         headers: {
           "Content-Type": "application/json",
