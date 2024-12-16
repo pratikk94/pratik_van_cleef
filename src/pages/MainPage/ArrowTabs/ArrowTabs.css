@@ -1,0 +1,74 @@
+/* Container holding all tabs */
+.tab-container {
+  display: flex;
+  width: 90%; /* 100% width minus 5vw margin on each side */
+  margin: 0 5vw; /* Horizontal margin */
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Base styling for tabs */
+.tab {
+  flex: 1;
+  position: relative;
+  padding: 15px 10px;
+  background-color: #f9f9f9;
+  color: #002b2b;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Active tabs - share same color */
+.tab.active {
+  background-color: #082c2c; /* Active color */
+  color: #fff;
+}
+
+/* Forward Arrow Effect - Active tabs */
+.tab.active::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -15px; /* Forward arrow offset */
+  width: 0;
+  height: 0;
+  border-top: 25px solid transparent;
+  border-bottom: 25px solid transparent;
+  border-left: 15px solid #082c2c; /* Matches active tab */
+  z-index: 1;
+}
+
+/* Remove forward arrow for last tab */
+.tab:last-child::after {
+  display: none;
+}
+
+/* Hover effect for next tabs */
+.tab:not(.active):hover {
+  background-color: #e0e0e0; /* Light grey on hover */
+}
+
+.tab:not(.active):hover::after {
+  border-left: 15px solid #e0e0e0; /* Light grey arrow on hover */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .tab-container {
+    flex-direction: column;
+    width: 100%;
+    margin: 0; /* Remove horizontal margin on smaller screens */
+  }
+
+  .tab {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .tab.active::after {
+    border: none; /* Remove arrows for smaller screens */
+  }
+}
