@@ -1,0 +1,148 @@
+/* Container Layout */
+.container-col-wrap {
+  display: flex;
+  width: 100%;
+  height: 100vh; /* Ensure full viewport height */
+  position: relative;
+}
+
+/* Left Column */
+.left-column {
+  position: absolute;
+  top: 50%;
+  left: 10%; /* 25% from the left */
+  transform: translateY(-50%);
+  width: 50%; /* Takes up 50% of the screen */
+  max-width: 500px; /* Optional: limit max width */
+  text-align: center;
+  z-index: 2;
+}
+
+/* Right Column */
+.right-column {
+  width: 50%; /* Occupies 50% of the screen */
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-column img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures image fills the space */
+}
+
+/* Slider Styles */
+.unique-slider-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.unique-slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.unique-slider-card {
+  min-width: 100%;
+  text-align: center;
+}
+
+.unique-slider-card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.unique-slider-card h2 {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
+
+.slider-body,
+.slider-price,
+.product-variations {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Pagination */
+.unique-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.unique-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ccc;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.unique-dot.active {
+  background-color: #333;
+}
+
+/* More Creations */
+.btslider {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.click-link {
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px solid #333;
+}
+
+.click-link:hover {
+  color: #777;
+  border-color: #777;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 1200px) {
+  .left-column {
+    left: 15%; /* Adjusts position for smaller screens */
+    width: 60%;
+  }
+
+  .right-column {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container-col-wrap {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left-column,
+  .right-column {
+    position: static;
+    width: 100%;
+    transform: none;
+    text-align: center;
+  }
+
+  .right-column img {
+    height: auto;
+  }
+
+  .left-column {
+    margin-top: 20px;
+  }
+}

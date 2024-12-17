@@ -1,0 +1,103 @@
+/* General Navbar Styling */
+.navbar {
+  width: 100%;
+  display: flex;
+  position: sticky;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 4rem;
+  background-color: transparent;
+  color: white;
+  height: 120px;
+  z-index: 33;
+}
+
+.burger-menu {
+  font-size: 1.5rem;
+  color: white;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  margin-right: 120px;
+}
+
+.logotop h1 {
+  font-family: Didot;
+  color: #fff;
+  cursor: pointer;
+  font-size: 40px;
+  letter-spacing: 2px;
+}
+
+.icons .icon {
+  display: inline-block;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Cart Hover */
+nav .cart-hoverbox {
+  position: absolute;
+  display: none;
+  background: #fff;
+  right: 0;
+  top: 46px;
+  padding: 25px;
+  color: #000;
+  border: 1px solid #777;
+  width: 400px;
+  z-index: 999;
+  text-align: center;
+}
+
+nav span.cart-empty {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+
+nav span.recentlyviewed {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #949494;
+}
+
+.cart-hoverbox:hover {
+  display: block;
+}
+
+/* Search Wrap */
+.search-wrap {
+  left: 105px;
+  position: absolute;
+  cursor: pointer;
+}
+
+.nav-searchtxt {
+  text-transform: uppercase;
+  font-size: 13px;
+  position: relative;
+  top: -5px;
+  left: 12px;
+  letter-spacing: 2px;
+}
+
+/* Responsive */
+@media screen and (max-width: 900px) {
+  .navbar {
+    height: 70px;
+    padding: 1rem;
+  }
+
+  .logotop h1 {
+    font-size: 23px;
+  }
+
+  .search-wrap {
+    left: 50px;
+  }
+
+  .search-wrap .nav-searchtxt {
+    display: none;
+  }
+}

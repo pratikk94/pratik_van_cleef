@@ -12,13 +12,15 @@ import Contactus from "./pages/Contactus/Contactus";
 import Cart from "./pages/Cart/Cart";
 import Booking from "./pages/Booking/Booking";
 import MainPageO from "./pages/MainPage/MainPage_old";
+// import Landing from "./pages/Landing/Landing";
+import LandingN from "./pages/Landing/Landing";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Checkout />} />
+          <Route path="/" element={<LandingN />} />
           <Route path="/ringsO" element={<MainPageO />} />
           <Route
             path="/rings"

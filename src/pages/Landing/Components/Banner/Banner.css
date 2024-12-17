@@ -1,0 +1,67 @@
+.banner-home {
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: -10vh; /* Keeping the original margin-top */
+  overflow: hidden;
+}
+
+.banner-home img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.banner-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 90%;
+  max-width: 800px;
+  padding: 20px;
+}
+
+/* Keeping original font sizes */
+.banner-content h1 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.banner-content p {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  color: white;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.click-link {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: white;
+  color: black;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  transition: all 0.3s ease;
+}
+
+.click-link:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  .banner-content {
+    padding: 15px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .banner-content {
+    padding: 10px;
+  }
+}

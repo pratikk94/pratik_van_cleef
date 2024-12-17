@@ -1,97 +1,213 @@
-/* Navbar container with sliding animation */
+/* General Navbar Styling */
+.navbar {
+  width: 100%;
+  display: flex;
+  position: sticky;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 4rem;
+  background-color: white;
+  color: white;
+  height: 120px;
+  z-index: 33;
+}
+
+.burger-menu {
+  font-size: 1.5rem;
+  color: white;
+  height: 20px;
+  cursor: pointer;
+  margin-right: 120px;
+}
+
+.logotop h1 {
+  font-family: Didot;
+  color: #fff;
+  cursor: pointer;
+  font-size: 40px;
+  letter-spacing: 2px;
+}
+
+.logotop {
+  position: fixed;
+  top: 8%;
+  left: 40%;
+  transform: translateY(-50%);
+  width: 50%;
+  max-width: 500px;
+  text-align: center;
+  z-index: 2;
+}
+
+.icons {
+  position: fixed;
+  top: 10%;
+  left: 80%;
+  transform: translateY(-50%);
+  width: 50%;
+  max-width: 500px;
+  text-align: center;
+  z-index: 2;
+}
+
+.icons .icon {
+  display: inline-block;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Cart Hover */
+nav .cart-hoverbox {
+  position: absolute;
+  display: none;
+  background: #fff;
+  right: 0;
+  top: 46px;
+  padding: 25px;
+  color: #000;
+  border: 1px solid #777;
+  width: 400px;
+  z-index: 999;
+  text-align: center;
+}
+
+nav span.cart-empty {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+
+nav span.recentlyviewed {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #949494;
+}
+
+nav .icon.cart-ico:hover .cart-hoverbox {
+  display: block;
+}
+
+/* Search Wrap */
+.search-wrap {
+  left: 105px;
+  /* position: absolute; */
+  left: 0px;
+  cursor: pointer;
+}
+
+.nav-searchtxt {
+  text-transform: uppercase;
+  font-size: 13px;
+  position: relative;
+  top: -5px;
+  left: 12px;
+  letter-spacing: 2px;
+}
+
+/* Sliding Menu */
 .nnavbar-container {
   position: fixed;
   top: 0;
-  left: 0px; /* Initially hidden */
+  left: -300px;
   width: 300px;
   height: 100%;
-  background: rgba(255, 255, 255, 1);
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease-in-out; /* Smooth sliding animation */
+  background-color: #fff;
+  transition: left 0.3s ease-in-out;
   z-index: 1000;
-  transform: translateX(-300px); /* Start hidden */
-}
-
-.nlogo {
-  width: 200px;
-  margin-top: 6vh;
+  overflow-y: auto;
 }
 
 .nnavbar-container.open {
-  transform: translateX(0); /* Slide into view */
+  left: 0;
 }
 
-/* Floating burger menu button */
-.nburger-menu {
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  width: 40px;
-  height: 30px;
-  cursor: pointer;
-  z-index: 1100; /* Ensure it's above other elements */
-  background: rgba(255, 255, 255, 0.5); /* Slightly transparent background */
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+.nnavbar-content {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.nnavbar-content .nlogo {
+  display: flex;
   align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
 }
 
-.nbrgr {
-  display: block;
-  width: 30px;
-  height: 40px;
-  background: #fff0;
-  margin: 5px 0;
-  transition: transform 0.2s ease, background 0.2s ease;
+.nnavbar-content .nlogo img {
+  max-width: 150px;
+  height: auto;
 }
 
-/* Change burger icon to 'X' when navbar is open */
-.nnavbar-container.open + .nburger-menu .nbrgr:nth-child(1) {
-  transform: rotate(45deg) translateY(8px);
+.nnavbar-content .nnav-links a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  padding: 10px 15px;
+  transition: all 0.3s ease-in-out;
+  border-radius: 5px;
 }
 
-.nnavbar-container.open + .nburger-menu .nbrgr:nth-child(2) {
-  opacity: 0; /* Hide middle line */
+.nnavbar-content .nnav-links a:hover {
+  color: #fff;
+  background-color: #000;
+  transform: translateX(5px);
 }
 
-.nnavbar-container.open + .nburger-menu .nbrgr:nth-child(3) {
-  transform: rotate(-45deg) translateY(-8px);
-}
-
-/* Overlay to dim the background */
+/* Overlay */
 .noverlay {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease-in-out;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
   z-index: 999;
+  transition: opacity 0.3s ease;
 }
 
 .noverlay.visible {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Navbar content */
-.nnavbar-content {
-  padding: 20px;
-}
-
-.nnav-links a {
   display: block;
-  margin: 10px 0;
-  color: #333;
-  text-decoration: none;
-  font-size: 18px;
+  opacity: 1;
 }
 
-.nnav-links a:hover {
-  color: #007bff;
+/* Responsive */
+@media screen and (max-width: 900px) {
+  .navbar {
+    height: 70px;
+    padding: 1rem;
+  }
+
+  .logotop h1 {
+    font-size: 23px;
+  }
+
+  .search-wrap {
+    left: 50px;
+  }
+
+  .search-wrap .nav-searchtxt {
+    display: none;
+  }
+
+  .nnavbar-container {
+    width: 250px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .nnavbar-container {
+    width: 200px;
+  }
+
+  .nnavbar-content .nlogo img {
+    max-width: 120px;
+  }
+
+  .navbar {
+    padding: 0.5rem;
+  }
 }

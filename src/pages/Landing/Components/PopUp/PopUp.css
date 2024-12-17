@@ -1,0 +1,62 @@
+/* Overlay */
+.overlay-profile,
+.overlay-call {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 998;
+}
+
+/* Popup */
+.popup-profile,
+.popup-call {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 450px;
+  background-color: white;
+  z-index: 9999;
+  padding: 50px;
+  overflow-y: auto;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.close-btn-profile,
+.close-btn-call {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.popup-content-call h3 {
+  text-transform: uppercase;
+  font-family: MaisonLight;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  font-size: 17px;
+}
+
+.popup-content-call p {
+  font-size: 13px;
+  line-height: 23px;
+}
+
+.contact-sociallinks a {
+  display: block;
+  color: #7f7f7f;
+  text-decoration: none;
+  font-size: 13px;
+  padding: 10px;
+}
+
+.contact-sociallinks a:hover {
+  color: #000;
+}
